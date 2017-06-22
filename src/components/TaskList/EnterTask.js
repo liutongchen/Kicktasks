@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EnterTask = ({onChange, onClick}) => {
+const EnterTask = ({onClick}) => {
   return (
     <form>
       <input
         id="taskInput"
         type="text"
-        placeholder="watch Wonder Woman"
-        onChange= {onChange}/>
+        placeholder="watch Wonder Woman"/>
       <label
         htmlFor="taskInput"
         className="btn btn-primary"
@@ -18,7 +17,6 @@ const EnterTask = ({onChange, onClick}) => {
 };
 
 EnterTask.propTypes = {
-  onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
