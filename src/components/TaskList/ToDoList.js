@@ -1,14 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const ToDoList = () => {
-  return (
-    <ul className="list-group">
-      {/* Received data goes here */}
-      <li className="list-group-item">one</li>
-      <li className="list-group-item">two</li>
-      <li className="list-group-item">three</li>
-    </ul>
-  );
+const ToDoList = ({todos}) => {
+    const listItems = todos.map(todo => <li key={todo.id} className="list-group-item">{todo.text}</li>);
+
+    return (
+      <ul className="list-group">
+          {listItems}
+      </ul>
+    );
+};
+
+ToDoList.propTypes = {
+    todos: PropTypes.array
 };
 
 export default ToDoList;

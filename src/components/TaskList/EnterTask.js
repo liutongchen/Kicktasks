@@ -17,7 +17,7 @@ const EnterTask = ({onClick}) => {
 };
 
 EnterTask.propTypes = {
-  onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired
 };
 
 export default EnterTask;
