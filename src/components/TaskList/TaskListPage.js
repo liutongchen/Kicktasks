@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EnterTask from './EnterTask';
 import ToDoList from './ToDoList';
+import DoingList from './DoingList';
+import DoneList from './DoneList';
 import {connect} from 'react-redux';
 import * as taskActions from '../../actions/taskListActions';
 import {bindActionCreators} from 'redux';
@@ -12,9 +14,11 @@ export class TaskListPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            todo: Object.assign({}, this.props.todo)
+            todo: Object.assign({}, this.props.todo),
+            filter: "todoList"
         };
         this.addTodo = this.addTodo.bind(this);
+        this.tabClickHandler = this.tabClickHandler.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,28 +36,53 @@ export class TaskListPage extends React.Component {
         this.props.actions.addTodo(this.state.todo);
     }
 
+    tabClickHandler(event) {
+        //toggle tab
+        const clickedTab = event.target;
+        const clickedTabParent = clickedTab.parentNode;
+        const clickedTabParentSiblings = clickedTabParent.parentNode.childNodes;
+
+        clickedTabParentSiblings.forEach((each) => {
+            each.classList.remove("active");
+        });
+        clickedTabParent.className += " active";
+
+        //toggle content
+        const clickedElement = clickedTab.getAttribute("href").slice(1);
+        let filter = this.state.filter;
+
+        filter = clickedElement;
+        this.setState({filter: filter});
+    }
+
     render() {
-        console.log(this.props.todoList); //test
         return (
-          <div className="container">
-            <EnterTask onClick={this.addTodo}/>
+            <div className="container col-md-offset-2 col-md-8">
+                <EnterTask onClick={this.addTodo} />
 
-            <ToDoList todos={this.props.todoList}/>
+                {
+                    this.state.filter === "todoList" ?
+                        <ToDoList id="todoList" todos={this.props.todoList}/> :
+                        this.state.filter === "doingList" ?
+                            <DoingList id="doingList"/> :
+                            <DoneList id="doneList" />
+                }
 
-            <ul className="nav nav-pills nav-justified row">
-              <li className="nav-item active">
-                <a className="nav-link" href="#toDo">To Do</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Doing</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Done</a>
-              </li>
-            </ul>
-          </div>
-    );
-  }
+
+                <ul className="nav nav-pills nav-justified row" onClick={this.tabClickHandler}>
+                    <li className="nav-item active" >
+                        <a className="nav-link" href="#todoList">To Do</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#doingList">Doing</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#doneList">Done</a>
+                    </li>
+                </ul>
+            </div>
+        );
+    }
 }
 
 TaskListPage.propTypes = {

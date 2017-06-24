@@ -1,0 +1,15 @@
+body {
+    margin: auto
+}
+
+.glyphicon-wrench,.glyphicon-check,.glyphicon-step-backward {
+    float: right;
+    margin-right: 5px;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
