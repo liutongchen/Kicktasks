@@ -19,6 +19,9 @@ export class TaskListPage extends React.Component {
         };
         this.addTodo = this.addTodo.bind(this);
         this.tabClickHandler = this.tabClickHandler.bind(this);
+        this.taskDoneHandler = this.taskDoneHandler.bind(this);
+        this.taskDoingHandler = this.taskDoingHandler.bind(this);
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -27,6 +30,7 @@ export class TaskListPage extends React.Component {
         }
     }
 
+    //----------helper functions----------------
     addTodo(event) {
         event.preventDefault();
         const text = document.getElementById("taskInput").value;
@@ -34,6 +38,26 @@ export class TaskListPage extends React.Component {
         todo["text"] = text;
         this.setState({todo: todo});
         this.props.actions.addTodo(this.state.todo);
+
+    }
+
+    taskDoingHandler() { //TODO: need to find the one that is clicked
+        event.preventDefault();
+        const todo = this.state.todo;
+        todo["doing"] = true;
+        todo["done"] = false;
+        this.setState({todo: todo});
+        this.props.actions.updateTodo(this.state.todo);
+        console.log("this.state.todo: ", this.state.todo); //test
+    }
+
+    taskDoneHandler() { //TODO: need to find the one that is clicked
+        event.preventDefault();
+        const todo = this.state.todo;
+        todo["done"] = true;
+        todo["doing"] = false;
+        this.setState({todo: todo});
+        this.props.actions.updateTodo(this.state.todo);
     }
 
     tabClickHandler(event) {
@@ -54,6 +78,7 @@ export class TaskListPage extends React.Component {
         filter = clickedElement;
         this.setState({filter: filter});
     }
+    //-----------------------------------------
 
     render() {
         return (
@@ -62,9 +87,13 @@ export class TaskListPage extends React.Component {
 
                 {
                     this.state.filter === "todoList" ?
-                        <ToDoList id="todoList" todos={this.props.todoList}/> :
+                        <ToDoList
+                            id="todoList"
+                            todos={this.props.todoList}
+                            taskDoingHandler={this.taskDoingHandler}
+                            taskDoneHandler={this.taskDoneHandler}/> :
                         this.state.filter === "doingList" ?
-                            <DoingList id="doingList"/> :
+                            <DoingList id="doingList" todos={this.props.todoList}/> :
                             <DoneList id="doneList" />
                 }
 

@@ -7,3 +7,11 @@ export const addTodo = todo => {
     };
 };
 
+export const updateTodo = todo => {
+    return {
+        type: types.UPDATE_TODO,
+        todo
+    };
+};
+
+

@@ -2,7 +2,7 @@ body {
     margin: auto
 }
 
-.glyphicon-wrench,.glyphicon-check,.glyphicon-step-backward {
+.glyphicon-play,.glyphicon-check,.glyphicon-arrow-left,.glyphicon-pause {
     float: right;
     margin-right: 5px;
 }
