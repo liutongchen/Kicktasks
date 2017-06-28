@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const ToDoList = ({todos, taskDoneHandler, taskDoingHandler}) => {
 
     const listItems = todos.map(todo => {
-        if (todo.doing === false && todo.done === false) {
+        if (todo.status === "todo") {
             return (
                 <li key={todo.id} id={todo.id} className="list-group-item">
                     {todo.text}

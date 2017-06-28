@@ -17,9 +17,7 @@ export class TaskListPage extends React.Component {
         };
         this.addTodo = this.addTodo.bind(this);
         this.tabClickHandler = this.tabClickHandler.bind(this);
-        this.taskDoneHandler = this.taskDoneHandler.bind(this);
-        this.taskDoingHandler = this.taskDoingHandler.bind(this);
-
+        this.updateTodoStatus = this.updateTodoStatus.bind(this);
     }
 
 
@@ -28,17 +26,16 @@ export class TaskListPage extends React.Component {
         event.preventDefault();
         const text = document.getElementById("taskInput").value;
         this.props.actions.addTodo(text);
+
+        const addTodoForm = document.getElementById("addTodoForm");
+        addTodoForm.reset();
     }
 
-    taskDoingHandler(event) {
+    updateTodoStatus(event, status) {
         const clickedTodoId = findClickedTodo(event);
-        this.props.actions.moveToDoingList(clickedTodoId);
+        this.props.actions.updateTodoStatus(clickedTodoId, status);
     }
 
-    taskDoneHandler(event) { //TODO: need to find the one that is clicked
-        const clickedTodoId = findClickedTodo(event);
-        this.props.actions.moveToDoneList(clickedTodoId);
-    }
 
     tabClickHandler(event) {
         //toggle tab
@@ -70,8 +67,8 @@ export class TaskListPage extends React.Component {
                         <ToDoList
                             id="todoList"
                             todos={this.props.todoList}
-                            taskDoingHandler={this.taskDoingHandler}
-                            taskDoneHandler={this.taskDoneHandler}/> :
+                            taskDoingHandler={(event) => {this.updateTodoStatus(event, "doing");}}
+                            taskDoneHandler={(event) => {this.updateTodoStatus(event, "done");}}/> :
                         this.state.filter === "doingList" ?
                             <DoingList id="doingList" todos={this.props.todoList}/> :
                             <DoneList id="doneList" todos={this.props.todoList}/>
@@ -104,7 +101,6 @@ TaskListPage.contextTypes = {
 };
 
 function mapStateToProps(state) {
-    console.log("mapStateToProps!"); //test
     return {
         todoList: state.taskList
     };

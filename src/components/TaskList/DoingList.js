@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const DoingList = ({todos}) => {
     const listItem = todos.map(todo => {
-        if (todo.doing === true && todo.done === false) {
+        if (todo.status === "doing") {
             return (
                 <li key={todo.id} className="list-group-item">
                     {todo.text}

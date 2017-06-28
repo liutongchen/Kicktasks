@@ -10,17 +10,11 @@ export const addTodo = text => {
     };
 };
 
-export const moveToDoingList = todoId => {
+export const updateTodoStatus = (todoId, status) => {
     return {
-        type: types.MOVE_TO_DOING_LIST,
-        todoId
-    };
-};
-
-export const moveToDoneList = todoId => {
-    return {
-        type: types.MOVE_TO_DONE_LIST,
-        todoId
+        type: types.UPDATE_TODO_STATUS,
+        todoId,
+        status
     };
 };
 

@@ -13,9 +13,8 @@ export function objectsAreSame(x, y, propertyNameList) {
     return objectsAreSame;
 }
 
+/*
 function componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps!");//test
-    console.log("B", this.state.todoList);//test
     const currentToDoList = this.state.todoList;
     nextProps.todoList.forEach((currentVal, index) => {
         if (currentToDoList.length < nextProps.todoList.length ||
@@ -25,5 +24,5 @@ function componentWillReceiveProps(nextProps) {
             });
         }
     });
-    console.log("A", this.state.todoList);//test
 }
+    */
