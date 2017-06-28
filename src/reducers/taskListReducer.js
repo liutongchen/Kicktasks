@@ -4,17 +4,27 @@ import * as types from '../actions/actionTypes';
 export default function taskReducer(state=initialState.todoList, action) {
     switch(action.type) {
         case types.ADD_TODO: {
-            return [...state, Object.assign({}, action.todo)];
+            return [...state, {id: action.id, text: action.text, doing: false, done: false}];
         }
 
-        case types.UPDATE_TODO: {
-            const newState = [];
-            state.forEach(eachTodo => {
-                eachTodo.id === action.id ?
-                    newState.push(Object.assign({}, action.todo)) :
-                    newState.push(eachTodo);
-            });
-            return newState;
+        case types.MOVE_TO_DOING_LIST: {
+            const after = state.slice(action.todoId + 1);
+            const before = state.slice(0, action.todoId);
+            const clickedTodo = Object.assign({}, state[action.todoId]);
+
+            clickedTodo["doing"] = true;
+            clickedTodo["done"] = false;
+            return [...before, clickedTodo, ...after];
+        }
+
+        case types.MOVE_TO_DONE_LIST: {
+            const after = state.slice(action.todoId + 1);
+            const before = state.slice(0, action.todoId);
+            const clickedTodo = Object.assign({}, state[action.todoId]);
+
+            clickedTodo["doing"] = false;
+            clickedTodo["done"] = true;
+            return [...before, clickedTodo, ...after];
         }
 
         default: {
@@ -22,3 +32,5 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
     }
 }
+
+

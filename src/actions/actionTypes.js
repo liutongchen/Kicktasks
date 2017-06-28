@@ -1,2 +1,3 @@
 export const ADD_TODO = "ADD_Todo";
-export const UPDATE_TODO = "UPDATE_TODO";
+export const MOVE_TO_DOING_LIST = "MOVE_TO_DOING_LIST";
+export const MOVE_TO_DONE_LIST = "MOVE_TO_DONE_LIST";

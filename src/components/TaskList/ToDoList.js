@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ToDoList = ({todos, taskDoneHandler, taskDoingHandler}) => {
-    const listItems = todos.map(todo =>
-        <li key={todo.id} className="list-group-item">
-            {todo.doing === false && todo.done === false ? todo.text : {}}
-            <a href="#" className="glyphicon glyphicon-check" onClick={taskDoneHandler} />
-            <a href="#" className="glyphicon glyphicon-play" onClick={taskDoingHandler} />
-        </li>);
+
+    const listItems = todos.map(todo => {
+        if (todo.doing === false && todo.done === false) {
+            return (
+                <li key={todo.id} id={todo.id} className="list-group-item">
+                    {todo.text}
+                    <a href="#" className="glyphicon glyphicon-check" onClick={taskDoneHandler}/>
+                    <a href="#" className="glyphicon glyphicon-play" onClick={taskDoingHandler}/>
+                </li>
+            );
+        }
+    });
 
     return (
       <ul className="list-group">

@@ -1,18 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const doneList = () => {
+const DoneList = ({todos}) => {
+    const listItem = todos.map(todo => {
+        if (todo.done === true && todo.doing === false) {
+            return (
+                <li key={todo.id} className="list-group-item">
+                    {todo.text}
+                    <a href="#" className="glyphicon glyphicon-arrow-left" />
+                </li>
+            );
+        }
+    });
+
     return (
         <ul className="list-group">
-            <li className="list-group-item">
-                Done One
-                <a href="#" className="glyphicon glyphicon-arrow-left"></a>
-            </li>
-            <li className="list-group-item">
-                Done Two
-                <a href="#" className="glyphicon glyphicon-arrow-left"></a>
-            </li>
+            {listItem}
         </ul>
     );
 };
 
-export default doneList;
+DoneList.propTypes = {
+    todos: PropTypes.array
+};
+
+export default DoneList;

@@ -1,17 +1,28 @@
 import * as types from './actionTypes';
 
-export const addTodo = todo => {
+let nextTodoId = 0;
+
+export const addTodo = text => {
     return {
         type: types.ADD_TODO,
-        todo
+        id: nextTodoId++,
+        text
     };
 };
 
-export const updateTodo = todo => {
+export const moveToDoingList = todoId => {
     return {
-        type: types.UPDATE_TODO,
-        todo
+        type: types.MOVE_TO_DOING_LIST,
+        todoId
     };
 };
+
+export const moveToDoneList = todoId => {
+    return {
+        type: types.MOVE_TO_DONE_LIST,
+        todoId
+    };
+};
+
 
 

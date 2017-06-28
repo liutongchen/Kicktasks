@@ -1,25 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EnterTask = ({onClick}) => {
+const EnterTask = ({onSubmit}) => {
     return (
-        <form>
+        <form onSubmit={onSubmit}>
             <input
                 className="col-md-8"
                 id="taskInput"
                 type="text"
                 placeholder="watch Wonder Woman"/>
-            <div className="divider"></div>
-            <label
-                htmlFor="taskInput"
-                className="btn btn-primary"
-                onClick={onClick}>Add</label>
+            <div className="divider" />
+            <label htmlFor="taskInput" className="btn btn-primary">Add</label>
         </form>
     );
 };
 
 EnterTask.propTypes = {
-    onClick: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
 };
 
 export default EnterTask;

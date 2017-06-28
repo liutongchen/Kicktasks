@@ -7,15 +7,13 @@ import DoneList from './DoneList';
 import {connect} from 'react-redux';
 import * as taskActions from '../../actions/taskListActions';
 import {bindActionCreators} from 'redux';
-
-let nextTodoId = 0;
+import {findClickedTodo} from '../../constants/helperFunctions';
 
 export class TaskListPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            todo: Object.assign({}, this.props.todo),
-            filter: "todoList"
+            filter: "todoList",
         };
         this.addTodo = this.addTodo.bind(this);
         this.tabClickHandler = this.tabClickHandler.bind(this);
@@ -24,40 +22,22 @@ export class TaskListPage extends React.Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.todo.id !== nextProps.todo.id) {
-            this.setState({todo: Object.assign({}, nextProps.todo)});
-        }
-    }
 
     //----------helper functions----------------
     addTodo(event) {
         event.preventDefault();
         const text = document.getElementById("taskInput").value;
-        const todo = this.state.todo;
-        todo["text"] = text;
-        this.setState({todo: todo});
-        this.props.actions.addTodo(this.state.todo);
-
+        this.props.actions.addTodo(text);
     }
 
-    taskDoingHandler() { //TODO: need to find the one that is clicked
-        event.preventDefault();
-        const todo = this.state.todo;
-        todo["doing"] = true;
-        todo["done"] = false;
-        this.setState({todo: todo});
-        this.props.actions.updateTodo(this.state.todo);
-        console.log("this.state.todo: ", this.state.todo); //test
+    taskDoingHandler(event) {
+        const clickedTodoId = findClickedTodo(event);
+        this.props.actions.moveToDoingList(clickedTodoId);
     }
 
-    taskDoneHandler() { //TODO: need to find the one that is clicked
-        event.preventDefault();
-        const todo = this.state.todo;
-        todo["done"] = true;
-        todo["doing"] = false;
-        this.setState({todo: todo});
-        this.props.actions.updateTodo(this.state.todo);
+    taskDoneHandler(event) { //TODO: need to find the one that is clicked
+        const clickedTodoId = findClickedTodo(event);
+        this.props.actions.moveToDoneList(clickedTodoId);
     }
 
     tabClickHandler(event) {
@@ -83,10 +63,10 @@ export class TaskListPage extends React.Component {
     render() {
         return (
             <div className="container col-md-offset-2 col-md-8">
-                <EnterTask onClick={this.addTodo} />
+                <EnterTask onSubmit={this.addTodo}/>
 
                 {
-                    this.state.filter === "todoList" ?
+                    this.state.filter === "todoList"?
                         <ToDoList
                             id="todoList"
                             todos={this.props.todoList}
@@ -94,7 +74,7 @@ export class TaskListPage extends React.Component {
                             taskDoneHandler={this.taskDoneHandler}/> :
                         this.state.filter === "doingList" ?
                             <DoingList id="doingList" todos={this.props.todoList}/> :
-                            <DoneList id="doneList" />
+                            <DoneList id="doneList" todos={this.props.todoList}/>
                 }
 
 
@@ -115,15 +95,17 @@ export class TaskListPage extends React.Component {
 }
 
 TaskListPage.propTypes = {
-    todo: PropTypes.object.isRequired,
     todoList: PropTypes.array,
     actions: PropTypes.object.isRequired
 };
 
+TaskListPage.contextTypes = {
+
+};
+
 function mapStateToProps(state) {
-    let todo = {id: nextTodoId++, text: "", doing: false, done: false};
+    console.log("mapStateToProps!"); //test
     return {
-        todo: todo,
         todoList: state.taskList
     };
 }
