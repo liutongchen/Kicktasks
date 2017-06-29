@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 const EnterTask = ({onSubmit}) => {
     return (
-        <form id="addTodoForm" onSubmit={onSubmit}>
+        <form className="list-group" id="addTodoForm" onSubmit={onSubmit}>
             <input
-                className="col-md-8"
+                className="list-group-item col-md-11"
                 id="taskInput"
                 type="text"
                 placeholder="Add a to-do..."/>
             <div className="divider" />
-            <label htmlFor="taskInput" className="btn btn-primary">Add</label>
+            <input type="submit" id="addTaskBtn" htmlFor="taskInput" className="btn btn-primary" value="Add"/>
         </form>
     );
 };

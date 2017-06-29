@@ -59,7 +59,19 @@ export class TaskListPage extends React.Component {
 
     render() {
         return (
-            <div className="container col-md-offset-2 col-md-8">
+            <div id="taskPage" className="container col-md-offset-2 col-md-8">
+                <div className="col-sm-2" id="taskPageSideBar">
+                    <nav className="nav-sidebar">
+                        <ul className="nav" onClick={this.tabClickHandler}>
+                            <li className="active"><a href="#todoList">To Do</a></li>
+                            <li><a href="#doingList">Doing</a></li>
+                            <li><a href="#doneList">Done</a></li>
+                            <li className="nav-divider"></li>
+                            <li><a href="#"><i className="glyphicon glyphicon-off"></i> Sign in</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
                 <EnterTask onSubmit={this.addTodo}/>
 
                 {
@@ -75,17 +87,6 @@ export class TaskListPage extends React.Component {
                 }
 
 
-                <ul className="nav nav-pills nav-justified row" onClick={this.tabClickHandler}>
-                    <li className="nav-item active" >
-                        <a className="nav-link" href="#todoList">To Do</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#doingList">Doing</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#doneList">Done</a>
-                    </li>
-                </ul>
             </div>
         );
     }
@@ -114,3 +115,17 @@ function mapDispatchToProps(dispatch) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskListPage);
+
+/*
+ <ul className="nav nav-pills nav-justified row" onClick={this.tabClickHandler}>
+ <li className="nav-item active" >
+ <a className="nav-link" href="#todoList">To Do</a>
+ </li>
+ <li className="nav-item">
+ <a className="nav-link" href="#doingList">Doing</a>
+ </li>
+ <li className="nav-item">
+ <a className="nav-link" href="#doneList">Done</a>
+ </li>
+ </ul>
+ */
