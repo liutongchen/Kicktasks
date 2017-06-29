@@ -4,6 +4,8 @@ import EnterTask from './EnterTask';
 import ToDoList from './ToDoList';
 import DoingList from './DoingList';
 import DoneList from './DoneList';
+import SideBar from './SideBar';
+import ProgressBar from './ProgressBar';
 import {connect} from 'react-redux';
 import * as taskActions from '../../actions/taskListActions';
 import {bindActionCreators} from 'redux';
@@ -16,7 +18,7 @@ export class TaskListPage extends React.Component {
             filter: "todoList",
         };
         this.addTodo = this.addTodo.bind(this);
-        this.tabClickHandler = this.tabClickHandler.bind(this);
+        this.sideBarClickHandler = this.sideBarClickHandler.bind(this);
         this.updateTodoStatus = this.updateTodoStatus.bind(this);
     }
 
@@ -36,8 +38,7 @@ export class TaskListPage extends React.Component {
         this.props.actions.updateTodoStatus(clickedTodoId, status);
     }
 
-
-    tabClickHandler(event) {
+    sideBarClickHandler(event) {
         //toggle tab
         const clickedTab = event.target;
         const clickedTabParent = clickedTab.parentNode;
@@ -55,23 +56,19 @@ export class TaskListPage extends React.Component {
         filter = clickedElement;
         this.setState({filter: filter});
     }
+
+    updateProgressBar() {
+        let totalTask = this.props.todoList.length;
+        let doingTask = this.props.todoList
+    }
+
     //-----------------------------------------
 
     render() {
         return (
             <div id="taskPage" className="container col-md-offset-2 col-md-8">
-                <div className="col-sm-2" id="taskPageSideBar">
-                    <nav className="nav-sidebar">
-                        <ul className="nav" onClick={this.tabClickHandler}>
-                            <li className="active"><a href="#todoList">To Do</a></li>
-                            <li><a href="#doingList">Doing</a></li>
-                            <li><a href="#doneList">Done</a></li>
-                            <li className="nav-divider"></li>
-                            <li><a href="#"><i className="glyphicon glyphicon-off"></i> Sign in</a></li>
-                        </ul>
-                    </nav>
-                </div>
-
+                <SideBar sideBarClickHandler={this.sideBarClickHandler}/>
+                <ProgressBar doneTaskPercent={} doingTaskPercent={}/>
                 <EnterTask onSubmit={this.addTodo}/>
 
                 {
