@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DoneList = ({todos}) => {
+const DoneList = ({todos, moveToPrevStatus}) => {
     const listItem = todos.map(todo => {
         if (todo.status === "done") {
             return (
-                <li key={todo.id} className="list-group-item">
+                <li key={todo.id} id={todo.id} className="list-group-item">
                     {todo.text}
-                    <a href="#" className="glyphicon glyphicon-arrow-left" />
+                    <a href="#" className="glyphicon glyphicon-arrow-left" onClick={moveToPrevStatus}/>
                 </li>
             );
         }
@@ -21,7 +21,8 @@ const DoneList = ({todos}) => {
 };
 
 DoneList.propTypes = {
-    todos: PropTypes.array
+    todos: PropTypes.array,
+    moveToPrevStatus: PropTypes.func.isRequired
 };
 
 export default DoneList;

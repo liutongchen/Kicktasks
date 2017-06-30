@@ -13,6 +13,10 @@
     padding-right: 25px;
 }
 
+#header {
+    background-color: #428bca;
+}
+
 #header::after {
     display: block;
     margin-top: 80px;
