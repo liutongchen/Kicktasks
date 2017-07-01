@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EnterTask from './EnterTask';
-import ToDoList from './ToDoList';
-import DoingList from './DoingList';
-import DoneList from './DoneList';
-import SideBar from './SideBar';
-import ProgressBar from './ProgressBar';
+import EnterTask from '../components/TaskList/EnterTask';
+import ToDoList from '../components/TaskList/ToDoList';
+import DoingList from '../components/TaskList/DoingList';
+import DoneList from '../components/TaskList/DoneList';
+import SideBar from '../components/TaskList/SideBar';
+import ProgressBar from '../components/TaskList/ProgressBar';
 import {connect} from 'react-redux';
-import * as taskActions from '../../actions/taskListActions';
+import * as taskActions from '../actions/taskListActions';
 import {bindActionCreators} from 'redux';
-import {findClickedTodo} from '../../constants/helperFunctions';
+import {findClickedTodo} from '../constants/helperFunctions';
 
 export class TaskListPage extends React.Component {
     constructor(props) {
