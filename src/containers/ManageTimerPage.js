@@ -13,7 +13,8 @@ export class ManageTimerPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            timer: getInitialTimer()
+            timer: getInitialTimer(),
+            isRunning: false
         };
         this.startWorkTimer = this.startWorkTimer.bind(this);
     }
@@ -21,17 +22,20 @@ export class ManageTimerPage extends React.Component {
     //-------helper functions------------
 
     startWorkTimer() {
-        //debugger;
+        if (this.state.isRunning === true) { return ;}
+        debugger;
         const workDurationInp = document.getElementById("workDurationInp");
         let workDuration = workDurationInp.value === "" ? workDurationInp.getAttribute("placeholder") : workDurationInp.value;
         let workDurationInSec = parseInt(workDuration) * 60;
 
-        setInterval(() => {
+        const countdown = setInterval(() => {
             if (workDurationInSec === 0) {
                 //update store
-                clearInterval();
-                this.setState({ timer: getInitialTimer() });
-                alert("what were you doing?");
+                clearInterval(countdown);
+                this.setState({
+                    timer: getInitialTimer(),
+                    isRunning: false
+                });
             } else {
                 let min = Math.floor(workDurationInSec / 60);
                 let sec = workDurationInSec % 60;
@@ -39,11 +43,14 @@ export class ManageTimerPage extends React.Component {
                 min = min < 10 ? "0" + min : min;
                 sec = sec < 10 ? "0" + sec : sec;
 
-                this.setState({ timer: min + " : " + sec });
+                this.setState({
+                    timer: min + " : " + sec,
+                    isRunning: true
+                });
 
                 workDurationInSec -= 1;
             }
-        }, 1);
+        }, 100);
     }
 
     stopWorkTimer() {
@@ -52,6 +59,7 @@ export class ManageTimerPage extends React.Component {
     //-----------------------------------
 
     render() {
+        console.log(this.state.timer);//test
         return (
             <div>
                 <TimerPage timer={this.state.timer} startWorkTimer={this.startWorkTimer} stopWorkTimer={this.stopWorkTimer}/>
