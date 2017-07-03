@@ -6,3 +6,10 @@ export const updateWorkDuration = (workDuration) => {
         workDuration
     };
 };
+
+export const recordTask = (task) => {
+    return {
+        type: types.RECORD_TASK,
+        task
+    }
+};

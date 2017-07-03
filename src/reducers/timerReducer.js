@@ -4,7 +4,16 @@ import * as types from '../actions/actionTypes';
 export default function timerReducer(state=initialState.timer, action) {
     switch(action.type) {
         case types.UPDATE_WORK_DURATION: {
-            return [...state, {workDuration: action.workDuration, breakDuration:"", totalCostTime: "", task: ""}];
+            return [...state]; //TODO: find the corresponding task and update the time
+        }
+
+        case types.RECORD_TASK: {
+            for (let eachTask in state) {
+                if (action.task === eachTask) {
+                    return [...state];
+                }
+            }
+            return [...state, {task: action.task, totalCostTime:""}];
         }
 
         default: {

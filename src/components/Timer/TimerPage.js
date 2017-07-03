@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import initialState from '../../reducers/initialState';
+import {changeTimer} from '../../constants/helperFunctions';
 
 const TimerPage = ({startWorkTimer, stopWorkTimer, timer}) => {
   return(
@@ -8,16 +9,16 @@ const TimerPage = ({startWorkTimer, stopWorkTimer, timer}) => {
           <div id="adjustMenu">
               <div id="workTimeAdjust">
                   <h3>Work Time</h3>
-                  <button className="glyphicon glyphicon-minus"/>
+                  <button className="glyphicon glyphicon-minus" onClick={() => changeTimer("workDurationInp", "-")}/>
                   <input id="workDurationInp" type="text" placeholder={initialState.initialWorkDuration} style={{textAlign: "center"}}/>
-                  <button className="glyphicon glyphicon-plus"/>
+                  <button className="glyphicon glyphicon-plus" onClick={() => changeTimer("workDurationInp", "+")}/>
               </div>
 
               <div id="breakTimeAdjust">
                   <h3>Break Time</h3>
-                  <button className="glyphicon glyphicon-minus"/>
+                  <button className="glyphicon glyphicon-minus" onClick={() => changeTimer("breakDurationInp", "-")}/>
                   <input id="breakDurationInp" type="text" placeholder={initialState.initialBreakDuration} style={{textAlign: "center"}}/>
-                  <button className="glyphicon glyphicon-plus"/>
+                  <button className="glyphicon glyphicon-plus" onClick={() => changeTimer("breakDurationInp", "+")}/>
               </div>
           </div>
 

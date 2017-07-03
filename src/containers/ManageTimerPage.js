@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as timerActions from '../actions/timerActions';
 import {connect} from 'react-redux';
 import initialState from '../reducers/initialState';
+import {isTimerValid} from '../constants/helperFunctions';
 
 function getInitialTimer() {
     return initialState.initialWorkDuration + " : " + "00";
@@ -17,25 +18,38 @@ export class ManageTimerPage extends React.Component {
             isRunning: false
         };
         this.startWorkTimer = this.startWorkTimer.bind(this);
+        this.stopWorkTimer = this.stopWorkTimer.bind(this);
+        this.endTimer = this.endTimer.bind(this);
+        this.countdown = null;
     }
 
     //-------helper functions------------
 
+    endTimer(duration) {
+        //update store
+        clearInterval(this.countdown);
+        this.setState({
+            timer: getInitialTimer(),
+            isRunning: false
+        });
+        console.log(duration);
+    }
+
+    this.recordTask() {
+
+    }
+
     startWorkTimer() {
         if (this.state.isRunning === true) { return ;}
-        debugger;
         const workDurationInp = document.getElementById("workDurationInp");
         let workDuration = workDurationInp.value === "" ? workDurationInp.getAttribute("placeholder") : workDurationInp.value;
-        let workDurationInSec = parseInt(workDuration) * 60;
+        let workDurationInSec = (+workDuration) * 60;
 
-        const countdown = setInterval(() => {
+        if (!isTimerValid(workDurationInSec)) { return; }
+        this.countdown = setInterval(() => {
             if (workDurationInSec === 0) {
-                //update store
-                clearInterval(countdown);
-                this.setState({
-                    timer: getInitialTimer(),
-                    isRunning: false
-                });
+                this.endTimer(workDurationInSec);
+                this.recordTask();
             } else {
                 let min = Math.floor(workDurationInSec / 60);
                 let sec = workDurationInSec % 60;
@@ -50,11 +64,16 @@ export class ManageTimerPage extends React.Component {
 
                 workDurationInSec -= 1;
             }
-        }, 100);
+        }, 1);
+
     }
 
     stopWorkTimer() {
-        console.log("stopped");
+        clearInterval(this.countdown);
+        this.setState({
+            timer: getInitialTimer(),
+            isRunning: false
+        });
     }
     //-----------------------------------
 
@@ -70,7 +89,7 @@ export class ManageTimerPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        timer: state.timer
+        todolist: state.taskList
     };
 }
 

@@ -1,3 +1,4 @@
 export const ADD_TODO = "ADD_Todo";
 export const UPDATE_TODO_STATUS = "UPDATE_TODO_STATUS";
 export const UPDATE_WORK_DURATION = "UPDATE_WORK_DURATION";
+export const RECORD_TASK = "RECORD_TASK";
