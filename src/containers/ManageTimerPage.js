@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TimerPage from '../components/Timer/TimerPage';
+import RecordTaskPopUp from '../components/Timer/RecordTaskPopUp';
 import {bindActionCreators} from 'redux';
 import * as timerActions from '../actions/timerActions';
 import {connect} from 'react-redux';
@@ -15,11 +17,13 @@ export class ManageTimerPage extends React.Component {
         super(props);
         this.state = {
             timer: getInitialTimer(),
-            isRunning: false
+            isRunning: false,
+            isTimerComplete: false
         };
         this.startWorkTimer = this.startWorkTimer.bind(this);
         this.stopWorkTimer = this.stopWorkTimer.bind(this);
         this.endTimer = this.endTimer.bind(this);
+        this.closePopUp = this.closePopUp.bind(this);
         this.countdown = null;
     }
 
@@ -30,13 +34,15 @@ export class ManageTimerPage extends React.Component {
         clearInterval(this.countdown);
         this.setState({
             timer: getInitialTimer(),
-            isRunning: false
+            isRunning: false,
+            isTimerComplete: true
         });
-        console.log(duration);
     }
 
-    this.recordTask() {
-
+    closePopUp() {
+        this.setState({
+            isTimerComplete: false
+        });
     }
 
     startWorkTimer() {
@@ -49,7 +55,6 @@ export class ManageTimerPage extends React.Component {
         this.countdown = setInterval(() => {
             if (workDurationInSec === 0) {
                 this.endTimer(workDurationInSec);
-                this.recordTask();
             } else {
                 let min = Math.floor(workDurationInSec / 60);
                 let sec = workDurationInSec % 60;
@@ -78,10 +83,13 @@ export class ManageTimerPage extends React.Component {
     //-----------------------------------
 
     render() {
-        console.log(this.state.timer);//test
         return (
             <div>
                 <TimerPage timer={this.state.timer} startWorkTimer={this.startWorkTimer} stopWorkTimer={this.stopWorkTimer}/>
+                {this.state.isTimerComplete ?
+                    <RecordTaskPopUp
+                        todoList={this.props.todoList}
+                        closePopUp={this.closePopUp}/> : null}
             </div>
         );
     }
@@ -89,7 +97,7 @@ export class ManageTimerPage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        todolist: state.taskList
+        todoList: state.taskList
     };
 }
 
@@ -98,5 +106,9 @@ function mapDispatchToProps(dispatch) {
         actions: bindActionCreators(timerActions, dispatch)
     };
 }
+
+ManageTimerPage.propTypes = {
+    todoList: PropTypes.array
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTimerPage);
