@@ -9,6 +9,8 @@ import configureStore from './store/configureStore';
 import {Router, browserHistory} from 'react-router';
 import routes from './routes';
 
+window.jQuery = window.$ = require('jquery/dist/jquery.min');
+require('bootstrap/dist/js/bootstrap.min.js');
 const store = configureStore();
 
 render(

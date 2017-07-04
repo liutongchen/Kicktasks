@@ -43,6 +43,7 @@ export class ManageTimerPage extends React.Component {
         this.setState({
             isTimerComplete: false
         });
+        $("#taskInpModal").modal("hide");
     }
 
     startWorkTimer() {
@@ -96,6 +97,7 @@ export class ManageTimerPage extends React.Component {
 }
 
 function mapStateToProps(state) {
+    debugger;
     return {
         todoList: state.taskList
     };
