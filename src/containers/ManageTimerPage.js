@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TimerPage from '../components/Timer/TimerPage';
 import RecordTaskPopUp from '../components/Timer/RecordTaskPopUp';
 import {bindActionCreators} from 'redux';
-import * as timerActions from '../actions/timerActions';
+import * as taskActions from '../actions/taskListActions';
 import {connect} from 'react-redux';
 import initialState from '../reducers/initialState';
 import {isTimerValid} from '../constants/helperFunctions';
@@ -24,12 +24,21 @@ export class ManageTimerPage extends React.Component {
         this.stopWorkTimer = this.stopWorkTimer.bind(this);
         this.endTimer = this.endTimer.bind(this);
         this.closePopUp = this.closePopUp.bind(this);
+        this.handleSaveTaskBtn = this.handleSaveTaskBtn.bind(this);
+
+        this.currentDurationInMin = null;
         this.countdown = null;
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.todoList.length < nextProps.todoList.length) {
+            nextProps.actions.updateTodoStatus(nextProps.todoList.length-1, "doing"); //assume the newly added task is the last one in todolist
+            console.log("todoList: ", nextProps.todoList);//test
+        }
+    }
     //-------helper functions------------
 
-    endTimer(duration) {
+    endTimer() {
         //update store
         clearInterval(this.countdown);
         this.setState({
@@ -46,6 +55,24 @@ export class ManageTimerPage extends React.Component {
         $("#taskInpModal").modal("hide");
     }
 
+    handleSaveTaskBtn() {
+        //get the value of option
+        let selectedVal = document.getElementById("taskOptions").value;
+
+        if (!selectedVal || selectedVal === "") {
+            selectedVal = prompt("Please enter the task you just did: ");
+            this.props.actions.addTodo(selectedVal);
+
+        }
+
+        //get the time of doing this task
+        const duration = this.currentDurationInMin;
+
+        //update the value to the store state
+
+        //close the modal and go back to the changed page
+    }
+
     startWorkTimer() {
         if (this.state.isRunning === true) { return ;}
         const workDurationInp = document.getElementById("workDurationInp");
@@ -55,7 +82,8 @@ export class ManageTimerPage extends React.Component {
         if (!isTimerValid(workDurationInSec)) { return; }
         this.countdown = setInterval(() => {
             if (workDurationInSec === 0) {
-                this.endTimer(workDurationInSec);
+                this.endTimer();
+                this.currentDurationInMin = workDuration;
             } else {
                 let min = Math.floor(workDurationInSec / 60);
                 let sec = workDurationInSec % 60;
@@ -90,14 +118,14 @@ export class ManageTimerPage extends React.Component {
                 {this.state.isTimerComplete ?
                     <RecordTaskPopUp
                         todoList={this.props.todoList}
-                        closePopUp={this.closePopUp}/> : null}
+                        closePopUp={this.closePopUp}
+                        handleSaveTaskBtn={this.handleSaveTaskBtn}/> : null}
             </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    debugger;
     return {
         todoList: state.taskList
     };
@@ -105,12 +133,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(timerActions, dispatch)
+        actions: bindActionCreators(taskActions, dispatch)
     };
 }
 
 ManageTimerPage.propTypes = {
-    todoList: PropTypes.array
+    todoList: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTimerPage);

@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {chooseOther} from '../../constants/helperFunctions';
 
 class RecordTaskPopUp extends React.Component {
 
     componentDidMount() {
         $("#taskInpModal" ).modal("show");
-        console.log($("#taskInpModal"));//test
+        chooseOther("taskOptions");
     }
 
     render() {
-        debugger;
         const todoList = this.props.todoList;
         const closePopUp = this.props.closePopUp;
         const options = [];
@@ -17,7 +17,7 @@ class RecordTaskPopUp extends React.Component {
             options.push(eachTodo.text);
         });
         const optionsList = options.map(todo => {
-            return <option value={todo}>{todo}</option>;
+            return <option key={todo} value={todo}>{todo}</option>;
         });
         return (
           <div className="modal fade" id="taskInpModal" tabIndex="-1" role="dialog">
@@ -30,10 +30,10 @@ class RecordTaskPopUp extends React.Component {
                           </button>
                       </div>
                       <div className="modal-body">
-                          <select>{optionsList}</select>
+                          <select id="taskOptions">{optionsList}</select>
                       </div>
                       <div className="modal-footer">
-                          <button type="button" className="btn btn-primary">Save changes</button>
+                          <button type="button" className="btn btn-primary" onClick={this.props.handleSaveTaskBtn}>Save</button>
                           <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closePopUp}>Close</button>
                       </div>
                   </div>
@@ -44,7 +44,8 @@ class RecordTaskPopUp extends React.Component {
 
 RecordTaskPopUp.propTypes = {
     todoList: PropTypes.array.isRequired,
-    closePopUp: PropTypes.func.isRequired
+    closePopUp: PropTypes.func.isRequired,
+    handleSaveTaskBtn: PropTypes.func.isRequired
 };
 
 export default RecordTaskPopUp;

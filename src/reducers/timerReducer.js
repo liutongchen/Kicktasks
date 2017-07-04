@@ -1,3 +1,4 @@
+/*
 import initialState from './initialState';
 import * as types from '../actions/actionTypes';
 
@@ -8,8 +9,8 @@ export default function timerReducer(state=initialState.timer, action) {
         }
 
         case types.RECORD_TASK: {
-            for (let eachTask in state) {
-                if (action.task === eachTask) {
+            for (let task in state) {
+                if (action.task === task) {
                     return [...state];
                 }
             }
@@ -21,3 +22,4 @@ export default function timerReducer(state=initialState.timer, action) {
         }
     }
 }
+*/

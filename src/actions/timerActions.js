@@ -1,3 +1,4 @@
+/*
 import * as types from './actionTypes';
 
 export const updateWorkDuration = (workDuration) => {
@@ -11,5 +12,6 @@ export const recordTask = (task) => {
     return {
         type: types.RECORD_TASK,
         task
-    }
+    };
 };
+    */
