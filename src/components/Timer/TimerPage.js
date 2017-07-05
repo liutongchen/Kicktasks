@@ -27,7 +27,7 @@ const TimerPage = ({startWorkTimer, stopWorkTimer, timer}) => {
           </div>
 
           <div id="timerControlMenu">
-              <div onClick={startWorkTimer} className="btn glyphicon glyphicon-play"/>
+              <div onClick={startWorkTimer} id="startTimer" className="btn glyphicon glyphicon-play"/>
               <div onClick={stopWorkTimer} className="btn glyphicon glyphicon-stop"/>
           </div>
       </div>

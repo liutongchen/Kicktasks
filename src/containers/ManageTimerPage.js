@@ -7,6 +7,7 @@ import * as taskActions from '../actions/taskListActions';
 import {connect} from 'react-redux';
 import initialState from '../reducers/initialState';
 import {isTimerValid} from '../constants/helperFunctions';
+import toastr from 'toastr';
 
 function getInitialTimer() {
     return initialState.initialWorkDuration + " : " + "00";
@@ -65,7 +66,7 @@ export class ManageTimerPage extends React.Component {
         if (!selectedVal || selectedVal === "") {
             //if newly added, update the status and duration in componentDidReceiveProps
             let newlyAddedVal = prompt("Please enter the task you just did: ");
-            this.props.actions.addTodo(newlyAddedVal);
+            if (newlyAddedVal) {this.props.actions.addTodo(newlyAddedVal);}
         } else {
             //if already exist, directly update the status and duration
             this.props.todoList.forEach(todo => {
@@ -88,7 +89,7 @@ export class ManageTimerPage extends React.Component {
         let workDuration = workDurationInp.value === "" ? workDurationInp.getAttribute("placeholder") : workDurationInp.value;
         let workDurationInSec = (+workDuration) * 60;
 
-        if (!isTimerValid(workDurationInSec)) { return; }
+        if (!isTimerValid(workDurationInSec)) { toastr.error("Please check your input!"); return; }
         this.countdown = setInterval(() => {
             if (workDurationInSec === 0) {
                 this.endTimer();

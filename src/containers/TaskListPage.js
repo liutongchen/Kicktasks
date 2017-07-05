@@ -124,10 +124,6 @@ TaskListPage.propTypes = {
     actions: PropTypes.object.isRequired
 };
 
-TaskListPage.contextTypes = {
-
-};
-
 function mapStateToProps(state) {
     return {
         todoList: state.taskList
@@ -142,17 +138,3 @@ function mapDispatchToProps(dispatch) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskListPage);
-
-/*
- <ul className="nav nav-pills nav-justified row" onClick={this.tabClickHandler}>
- <li className="nav-item active" >
- <a className="nav-link" href="#todoList">To Do</a>
- </li>
- <li className="nav-item">
- <a className="nav-link" href="#doingList">Doing</a>
- </li>
- <li className="nav-item">
- <a className="nav-link" href="#doneList">Done</a>
- </li>
- </ul>
- */

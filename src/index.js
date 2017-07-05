@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import {Router, browserHistory} from 'react-router';
 import routes from './routes';
+import '../node_modules/toastr/build/toastr.min.css';
 
 window.jQuery = window.$ = require('jquery/dist/jquery.min');
 require('bootstrap/dist/js/bootstrap.min.js');

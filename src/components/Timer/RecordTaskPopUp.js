@@ -31,6 +31,7 @@ class RecordTaskPopUp extends React.Component {
                       </div>
                       <div className="modal-body">
                           <select id="taskOptions">{optionsList}</select>
+
                       </div>
                       <div className="modal-footer">
                           <button type="button" className="btn btn-primary" onClick={this.props.handleSaveTaskBtn}>Save</button>

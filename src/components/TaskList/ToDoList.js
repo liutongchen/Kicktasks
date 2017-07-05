@@ -10,6 +10,7 @@ const ToDoList = ({todos, taskDoneHandler, taskDoingHandler}) => {
                     {todo.text}
                     <a href="#" className="glyphicon glyphicon-check" onClick={taskDoneHandler}/>
                     <a href="#" className="glyphicon glyphicon-play" onClick={taskDoingHandler}/>
+                    <a href="#" className="glyphicon glyphicon-option-horizontal" />
                 </li>
             );
         }

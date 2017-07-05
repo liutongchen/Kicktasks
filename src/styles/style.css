@@ -1,5 +1,5 @@
 /*----------TaskListPage-------------*/
-.glyphicon-play,.glyphicon-check,.glyphicon-arrow-left,.glyphicon-pause {
+.glyphicon-play,.glyphicon-check,.glyphicon-arrow-left,.glyphicon-pause,.glyphicon-option-horizontal {
     float: right;
     margin-right: 5px;
 }
@@ -38,6 +38,17 @@
     color: gray
 }
 
+.list-group-item:hover {
+    background-color: lightgray;
+}
+
+.list-group-item .glyphicon-option-horizontal {
+    visibility: hidden
+}
+
+.list-group-item:hover .glyphicon-option-horizontal {
+    visibility: visible;
+}
 
 /*--------SIDEBAR-------------*/
 #taskPageSideBar {
