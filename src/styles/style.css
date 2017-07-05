@@ -32,6 +32,12 @@
     padding-right: 0px;
 }
 
+.durationInTaskPage {
+    position: absolute;
+    left: 30%;
+    color: gray
+}
+
 
 /*--------SIDEBAR-------------*/
 #taskPageSideBar {

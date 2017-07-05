@@ -28,6 +28,12 @@ export function chooseOther(parentNodeId) {
     optionNode.appendChild(text);
     document.getElementById(parentNodeId).appendChild(optionNode);
 }
+
+export function getDurationNum(durationString) {
+    let durationNum = +(durationString.slice(0, durationString.length - 3));
+    return durationNum;
+}
+
     /*
     //create an input node if "other" is chosen
     if (document.getElementById(parentNodeId).children.length === 1) {

@@ -7,6 +7,7 @@ const DoingList = ({todos, taskDoneHandler, moveTaskToPrevStatus}) => {
             return (
                 <li key={todo.id} id={todo.id} className="list-group-item">
                     {todo.text}
+                    <span className="durationInTaskPage">{"Time Spent: " + todo.duration}</span>
                     <a href="#" className="glyphicon glyphicon-check" onClick={taskDoneHandler}/>
                     <a href="#" className="glyphicon glyphicon-pause" onClick={moveTaskToPrevStatus}/>
                 </li>

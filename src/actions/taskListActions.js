@@ -18,6 +18,12 @@ export const updateTodoStatus = (todoId, status) => {
     };
 };
 
-
+export const updateTodoDuration = (todoId, duration) => {
+    return {
+        type: types.UPDATE_TODO_DURATION,
+        duration,
+        todoId
+    };
+};
 
 

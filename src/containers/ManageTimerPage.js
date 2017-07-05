@@ -13,8 +13,8 @@ function getInitialTimer() {
 }
 
 export class ManageTimerPage extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             timer: getInitialTimer(),
             isRunning: false,
@@ -33,7 +33,8 @@ export class ManageTimerPage extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.todoList.length < nextProps.todoList.length) {
             nextProps.actions.updateTodoStatus(nextProps.todoList.length-1, "doing"); //assume the newly added task is the last one in todolist
-            console.log("todoList: ", nextProps.todoList);//test
+            nextProps.actions.updateTodoDuration(nextProps.todoList.length-1, this.currentDurationInMin + "min");
+            this.redirect();
         }
     }
     //-------helper functions------------
@@ -56,21 +57,29 @@ export class ManageTimerPage extends React.Component {
     }
 
     handleSaveTaskBtn() {
-        //get the value of option
         let selectedVal = document.getElementById("taskOptions").value;
+        let status = "doing";
+        let duration = this.currentDurationInMin + "min";
+        let todoId;
 
         if (!selectedVal || selectedVal === "") {
-            selectedVal = prompt("Please enter the task you just did: ");
-            this.props.actions.addTodo(selectedVal);
-
+            //if newly added, update the status and duration in componentDidReceiveProps
+            let newlyAddedVal = prompt("Please enter the task you just did: ");
+            this.props.actions.addTodo(newlyAddedVal);
+        } else {
+            //if already exist, directly update the status and duration
+            this.props.todoList.forEach(todo => {
+                if (todo.text === selectedVal) {
+                    todoId = todo.id;
+                    return;
+                }
+            });
+            this.props.actions.updateTodoDuration(todoId, duration);
+            this.props.actions.updateTodoStatus(todoId, status);
+            this.redirect();
         }
 
-        //get the time of doing this task
-        const duration = this.currentDurationInMin;
-
-        //update the value to the store state
-
-        //close the modal and go back to the changed page
+        $("#taskInpModal").modal("hide");
     }
 
     startWorkTimer() {
@@ -109,6 +118,10 @@ export class ManageTimerPage extends React.Component {
             isRunning: false
         });
     }
+
+    redirect() {
+        this.context.router.push("/task");
+    }
     //-----------------------------------
 
     render() {
@@ -140,6 +153,10 @@ function mapDispatchToProps(dispatch) {
 ManageTimerPage.propTypes = {
     todoList: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
+};
+
+ManageTimerPage.contextTypes = {
+    router: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTimerPage);
