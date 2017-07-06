@@ -26,4 +26,13 @@ export const updateTodoDuration = (todoId, duration) => {
     };
 };
 
+export const editTask = (todoId, title, duration, status) => {
+    return {
+        type: types.EDIT_TASK,
+        todoId,
+        title,
+        duration,
+        status
+    };
+};
 

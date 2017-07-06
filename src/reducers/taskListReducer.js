@@ -29,6 +29,7 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
 
         case types.UPDATE_TODO_DURATION: {
+            debugger;
             const after = state.slice(action.todoId + 1);
             const before = state.slice(0, action.todoId);
             const completedTodo = Object.assign({}, state[action.todoId]);
@@ -39,6 +40,17 @@ export default function taskReducer(state=initialState.todoList, action) {
 
             completedTodo.duration = durationNumAfter + "min";
             return [...before, completedTodo, ...after];
+        }
+
+        case types.EDIT_TASK: {
+            const after = state.slice(action.todoId + 1);
+            const before = state.slice(0, action.todoId);
+            const editedTodo = Object.assign({}, state[action.todoId]);
+
+            editedTodo.text = action.title;
+            editedTodo.duration = action.duration;
+            editedTodo.status = action.status;
+            return [...before, editedTodo, ...after];
         }
 
         default: {

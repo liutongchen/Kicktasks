@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const DoingList = ({todos, taskDoneHandler, moveTaskToPrevStatus}) => {
+const DoingList = ({todos, taskDoneHandler, moveTaskToPrevStatus, handleEditClick}) => {
     const listItem = todos.map(todo => {
         if (todo.status === "doing") {
             return (
@@ -10,6 +10,7 @@ const DoingList = ({todos, taskDoneHandler, moveTaskToPrevStatus}) => {
                     <span className="durationInTaskPage">{"Time Spent: " + todo.duration}</span>
                     <a href="#" className="glyphicon glyphicon-check" onClick={taskDoneHandler}/>
                     <a href="#" className="glyphicon glyphicon-pause" onClick={moveTaskToPrevStatus}/>
+                    <a href="#" className="glyphicon glyphicon glyphicon-pencil" onClick={handleEditClick}/>
                 </li>
             );
         }
@@ -22,9 +23,10 @@ const DoingList = ({todos, taskDoneHandler, moveTaskToPrevStatus}) => {
 };
 
 DoingList.propTypes = {
-    todos: PropTypes.array,
-    taskDoneHandler: PropTypes.func,
-    moveTaskToPrevStatus: PropTypes.func
+    todos: PropTypes.array.isRequired,
+    taskDoneHandler: PropTypes.func.isRequired,
+    moveTaskToPrevStatus: PropTypes.func.isRequired,
+    handleEditClick: PropTypes.func.isRequired
 };
 
 export default DoingList;

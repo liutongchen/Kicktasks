@@ -19,6 +19,19 @@ export function isTimerValid(inp) {
     return (inp >= 0);
 }
 
+export function isTitleValid(prevTodoList, editedId, newTitle) {
+    //1. cannot be duplicate, but can be the same as the editing one
+    //2. cannot be blank
+    let isValid = true;
+    let editedTitle = prevTodoList[editedId].text;
+    prevTodoList.forEach(todo => {
+        if ((todo.text === newTitle && newTitle !== editedTitle) || newTitle === ""){
+            return isValid = false;
+        }
+    });
+    return isValid;
+}
+
 export function chooseOther(parentNodeId) {
     //create <option>Other</option>
     const optionNode = document.createElement("option");

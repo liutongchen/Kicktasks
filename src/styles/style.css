@@ -1,5 +1,5 @@
 /*----------TaskListPage-------------*/
-.glyphicon-play,.glyphicon-check,.glyphicon-arrow-left,.glyphicon-pause,.glyphicon-option-horizontal {
+.glyphicon-play,.glyphicon-check,.glyphicon-arrow-left,.glyphicon-pause,.glyphicon-pencil {
     float: right;
     margin-right: 5px;
 }
@@ -42,12 +42,16 @@
     background-color: lightgray;
 }
 
-.list-group-item .glyphicon-option-horizontal {
+.list-group-item .glyphicon-pencil {
     visibility: hidden
 }
 
-.list-group-item:hover .glyphicon-option-horizontal {
+.list-group-item:hover .glyphicon-pencil {
     visibility: visible;
+}
+
+#taskInput {
+    background-color: white;
 }
 
 /*--------SIDEBAR-------------*/
@@ -125,3 +129,5 @@
 .modal {
     display: block;
 }
+
+/*------------Edit Window-------------*/
