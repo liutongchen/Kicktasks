@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProgressBar = ({doneTaskPercent, doingTaskPercent}) => {
+const ProgressBar = ({doneTaskPercent, doingTaskPercent, todoTaskPercent}) => {
     return (
             <div className="progress">
                 <div className="progress-bar progress-bar-success" role="progressbar" style={{width:doneTaskPercent}}>
@@ -10,6 +10,9 @@ const ProgressBar = ({doneTaskPercent, doingTaskPercent}) => {
                 <div className="progress-bar progress-bar-warning" role="progressbar" style={{width: doingTaskPercent}}>
                     {doingTaskPercent + " doing"}
                 </div>
+                <div className="progress-bar progress-bar-info" role="progressbar" style={{width:todoTaskPercent}}>
+                    {todoTaskPercent + " todo"}
+                </div>
             </div>
 
     );
@@ -17,7 +20,8 @@ const ProgressBar = ({doneTaskPercent, doingTaskPercent}) => {
 
 ProgressBar.propTypes = {
     doneTaskPercent: PropTypes.string,
-    doingTaskPercent: PropTypes.string
+    doingTaskPercent: PropTypes.string,
+    todoTaskPercent: PropTypes.string
 };
 
 export default ProgressBar;

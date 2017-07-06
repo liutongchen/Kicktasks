@@ -29,7 +29,6 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
 
         case types.UPDATE_TODO_DURATION: {
-            debugger;
             const after = state.slice(action.todoId + 1);
             const before = state.slice(0, action.todoId);
             const completedTodo = Object.assign({}, state[action.todoId]);

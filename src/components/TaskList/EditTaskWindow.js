@@ -10,7 +10,7 @@ class EditTaskWindow extends React.Component {
 
     render() {
         return (
-            <div className="modal fade" id="taskEditModal" tabIndex="-1" role="dialog">
+            <div className="modal fade"  data-backdrop="false" id="taskEditModal" tabIndex="-1" role="dialog">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">

@@ -1,3 +1,25 @@
+/*---------App.js-------------*/
+#navbarNavDropdown .navbar-nav .active a{
+    background-color: white;
+    color: #428bca;
+}
+
+#navbarNavDropdown .navbar-nav{
+    padding-right: 25px;
+}
+
+#navbarNavDropdown a{
+    color: white;
+}
+
+#header::after {
+    display: block;
+    margin-top: 80px;
+}
+
+.navbar-collapse{
+    background-color: #428bca;
+}
 /*----------TaskListPage-------------*/
 .glyphicon-play,.glyphicon-check,.glyphicon-arrow-left,.glyphicon-pause,.glyphicon-pencil {
     float: right;
@@ -10,26 +32,18 @@
     display:inline-block;
 }
 
-.navbar-nav {
-    padding-right: 25px;
-}
-
-#header {
-    background-color: #428bca;
-}
-
-#header::after {
-    display: block;
-    margin-top: 80px;
-}
-
 #addTaskBtn {
     padding: 10px 12px;
 }
 
 #taskPage {
-    padding-left: 120px;
-    padding-right: 0px;
+    background-image: url("../images/bgPic.JPG");
+    background-size: cover;
+    background-repeat:no-repeat;
+    min-height: 800px;
+    position: fixed;
+    top: 50px;
+    padding-top:20px;
 }
 
 .durationInTaskPage {
@@ -59,6 +73,7 @@
     position: fixed;
     top: 50px;
     left: 0px;
+    padding: 0px;
 }
 
 .nav-sidebar {
@@ -78,11 +93,15 @@
     -moz-border-radius: 4px 0 0 4px;
     border-radius: 4px 0 0 4px;
 }
-.nav-sidebar .active a {
+#taskPageSideBar .nav-sidebar .active a {
     cursor: default;
     background-color: #428bca;
     color: #fff;
     text-shadow: 1px 1px 1px #666;
+}
+/*----------ProgressBar--------------*/
+.progress {
+    margin-right: 20px;
 }
 
 /*----------TimerPage--------------*/
@@ -131,3 +150,4 @@
 }
 
 /*------------Edit Window-------------*/
+ .modal-backdrop.in { z-index: auto;}

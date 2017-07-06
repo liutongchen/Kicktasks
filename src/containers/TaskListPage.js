@@ -71,22 +71,28 @@ export class TaskListPage extends React.Component {
         let totalTaskNum = this.props.todoList.length;
         let doingTaskNum = 0;
         let doneTaskNum = 0;
+        let todoTaskNum = 0;
 
         if (totalTaskNum === 0) {
             return {
+                todoTaskPercent: 0 + "%",
                 doingTaskPercent: 0 + "%",
-                doneTaskPercent: 0 + "%"
+                doneTaskPercent: 0 + "%",
             };
         }
+
         this.props.todoList.forEach((todo) => {
             if (todo.status === "doing") {
                 doingTaskNum += 1;
             } else if(todo.status === "done") {
                 doneTaskNum += 1;
+            } else if (todo.status === "todo") {
+                todoTaskNum += 1;
             }
         });
 
         return {
+            todoTaskPercent: Math.floor((todoTaskNum / totalTaskNum) * 100) + "%",
             doingTaskPercent: Math.floor((doingTaskNum / totalTaskNum) * 100) + "%",
             doneTaskPercent: Math.floor((doneTaskNum / totalTaskNum) * 100) + "%"
         };
@@ -121,38 +127,44 @@ export class TaskListPage extends React.Component {
 
     render() {
         return (
-            <div id="taskPage" className="container col-md-offset-2 col-md-8">
-                <SideBar sideBarClickHandler={this.sideBarClickHandler}/>
-                <ProgressBar
-                    doneTaskPercent={this.updateProgressBar().doneTaskPercent}
-                    doingTaskPercent={this.updateProgressBar().doingTaskPercent}/>
-                <EnterTask onSubmit={this.addTodo}/>
+            <div>
+                <div id="sideBar" className="container">
+                    <SideBar sideBarClickHandler={this.sideBarClickHandler}/>
+                </div>
+                <div id="taskPage" className="container col-md-offset-3 col-md-9">
 
-                {
-                    this.state.filter === "todoList"?
-                        <ToDoList
-                            id="todoList"
-                            todos={this.props.todoList}
-                            taskDoingHandler={(event) => this.updateTodoStatus(event, "doing")}
-                            taskDoneHandler={(event) => this.updateTodoStatus(event, "done")}
-                            handleEditClick={(event) => this.openEditWindow(event)}/> :
-                        this.state.filter === "doingList" ?
-                            <DoingList
-                                id="doingList"
+                    <EnterTask onSubmit={this.addTodo}/>
+                    <ProgressBar
+                        todoTaskPercent={this.updateProgressBar().todoTaskPercent}
+                        doneTaskPercent={this.updateProgressBar().doneTaskPercent}
+                        doingTaskPercent={this.updateProgressBar().doingTaskPercent}/>
+
+                    {
+                        this.state.filter === "todoList"?
+                            <ToDoList
+                                id="todoList"
                                 todos={this.props.todoList}
+                                taskDoingHandler={(event) => this.updateTodoStatus(event, "doing")}
                                 taskDoneHandler={(event) => this.updateTodoStatus(event, "done")}
-                                moveTaskToPrevStatus={(event) => this.updateTodoStatus(event, "todo")}
                                 handleEditClick={(event) => this.openEditWindow(event)}/> :
-                            <DoneList
-                                id="doneList"
-                                todos={this.props.todoList}
-                                moveToPrevStatus={(event) => this.updateTodoStatus(event, "doing")}
-                                handleEditClick={(event) => this.openEditWindow(event)}/>
-                }
-                {this.state.toEdit ? <EditTaskWindow
-                    closeWindow={this.closeEditWindow}
-                    taskEditSaveBtn={this.saveEditedTask}/> : null}
+                            this.state.filter === "doingList" ?
+                                <DoingList
+                                    id="doingList"
+                                    todos={this.props.todoList}
+                                    taskDoneHandler={(event) => this.updateTodoStatus(event, "done")}
+                                    moveTaskToPrevStatus={(event) => this.updateTodoStatus(event, "todo")}
+                                    handleEditClick={(event) => this.openEditWindow(event)}/> :
+                                <DoneList
+                                    id="doneList"
+                                    todos={this.props.todoList}
+                                    moveToPrevStatus={(event) => this.updateTodoStatus(event, "doing")}
+                                    handleEditClick={(event) => this.openEditWindow(event)}/>
+                    }
+                    {this.state.toEdit ? <EditTaskWindow
+                        closeWindow={this.closeEditWindow}
+                        taskEditSaveBtn={this.saveEditedTask}/> : null}
 
+                </div>
             </div>
         );
     }

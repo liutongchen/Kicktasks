@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const SideBar = ({sideBarClickHandler}) => {
     return (
-        <div className="col-sm-2" id="taskPageSideBar">
+        <div className="col-sm-3" id="taskPageSideBar">
             <nav className="nav-sidebar">
                 <ul className="nav" onClick={sideBarClickHandler}>
                     <li className="active"><a href="#todoList">To Do</a></li>
