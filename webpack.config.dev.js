@@ -34,7 +34,8 @@ export default {
         removeComments: true,
         collapseWhitespace: true
       },
-      inject: true
+      inject: true,
+      favicon: 'src/images/favicon.png'
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: false,

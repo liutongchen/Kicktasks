@@ -22,7 +22,6 @@ class App extends React.Component {
                                 <li className="nav"><IndexLink to="/" onClick={(e) => toggleActiveClass(e)}>Home</IndexLink></li>
                                 <li className="nav"><Link to="/task" onClick={(e) => toggleActiveClass(e)}>Task</Link></li>
                                 <li className="nav"><Link to="/timer" onClick={(e) => toggleActiveClass(e)}>Timer</Link></li>
-                                <li className="nav"><Link to="/punRew" onClick={(e) => toggleActiveClass(e)}>Punish&Reward</Link></li>
                             </ul>
                         </div>
 
