@@ -14,7 +14,7 @@ class RecordTaskPopUp extends React.Component {
         const closePopUp = this.props.closePopUp;
         const options = [];
         todoList.forEach(eachTodo => {
-            options.push(eachTodo.text);
+            if (eachTodo.status !== "deleted") { options.push(eachTodo.text); }
         });
         const optionsList = options.map(todo => {
             return <option key={todo} value={todo}>{todo}</option>;

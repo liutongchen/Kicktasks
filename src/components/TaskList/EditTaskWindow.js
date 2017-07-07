@@ -38,6 +38,7 @@ class EditTaskWindow extends React.Component {
                             </form>
                         </div>
                         <div className="modal-footer">
+                            <button type="button" className="btn btn-danger" onClick={this.props.deleteTask}>Delete</button>
                             <button type="button" className="btn btn-primary" onClick={this.props.taskEditSaveBtn}>Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.props.closeWindow}>Close</button>
                         </div>
@@ -49,6 +50,7 @@ class EditTaskWindow extends React.Component {
 
 
 EditTaskWindow.propTypes = {
+    deleteTask: PropTypes.func.isRequired,
     closeWindow: PropTypes.func.isRequired,
     taskEditSaveBtn: PropTypes.func.isRequired
 };

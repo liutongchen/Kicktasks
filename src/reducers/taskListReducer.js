@@ -20,6 +20,7 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
 
         case types.UPDATE_TODO_STATUS: {
+            action.todoId = parseInt(action.todoId);
             const after = state.slice(action.todoId + 1);
             const before = state.slice(0, action.todoId);
             const clickedTodo = Object.assign({}, state[action.todoId]);
@@ -29,6 +30,7 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
 
         case types.UPDATE_TODO_DURATION: {
+            action.todoId = parseInt(action.todoId);
             const after = state.slice(action.todoId + 1);
             const before = state.slice(0, action.todoId);
             const completedTodo = Object.assign({}, state[action.todoId]);
@@ -42,6 +44,7 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
 
         case types.EDIT_TASK: {
+            action.todoId = parseInt(action.todoId);
             const after = state.slice(action.todoId + 1);
             const before = state.slice(0, action.todoId);
             const editedTodo = Object.assign({}, state[action.todoId]);
@@ -50,6 +53,20 @@ export default function taskReducer(state=initialState.todoList, action) {
             editedTodo.duration = action.duration;
             editedTodo.status = action.status;
             return [...before, editedTodo, ...after];
+        }
+
+        case types.DELETE_TASK: {
+            debugger;
+            action.todoId = parseInt(action.todoId);
+            const after = state.slice(action.todoId + 1);
+            const before = state.slice(0, action.todoId);
+            const deletedTodo = Object.assign({}, state[action.todoId]);
+
+            deletedTodo.text = "";
+            deletedTodo.status = "deleted";
+            deletedTodo.duration = "0min";
+
+            return [...before, deletedTodo, ...after];
         }
 
         default: {

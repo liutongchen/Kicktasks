@@ -14,8 +14,8 @@ import {findClickedTodo, isTimerValid, isTitleValid} from '../constants/helperFu
 import toastr from 'toastr';
 
 export class TaskListPage extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.state = {
             filter: "todoList",
             toEdit: false
@@ -27,6 +27,8 @@ export class TaskListPage extends React.Component {
         this.openEditWindow = this.openEditWindow.bind(this);
         this.closeEditWindow = this.closeEditWindow.bind(this);
         this.saveEditedTask = this.saveEditedTask.bind(this);
+        this.deleteTask = this.deleteTask.bind(this);
+        this.moveToTimerPage = this.moveToTimerPage.bind(this);
 
         this.editedTaskId = null;
     }
@@ -46,6 +48,10 @@ export class TaskListPage extends React.Component {
     updateTodoStatus(event, status) {
         const clickedTodoId = findClickedTodo(event);
         this.props.actions.updateTodoStatus(clickedTodoId, status);
+    }
+
+    moveToTimerPage() {
+        this.context.router.push("/timer");
     }
 
     sideBarClickHandler(event) {
@@ -68,20 +74,20 @@ export class TaskListPage extends React.Component {
     }
 
     updateProgressBar() {
-        let totalTaskNum = this.props.todoList.length;
+        let totalTaskNum = 0;
         let doingTaskNum = 0;
         let doneTaskNum = 0;
         let todoTaskNum = 0;
-
-        if (totalTaskNum === 0) {
-            return {
-                todoTaskPercent: 0 + "%",
-                doingTaskPercent: 0 + "%",
-                doneTaskPercent: 0 + "%",
-            };
-        }
+        let initialProgress = {
+            todoTaskPercent: 0 + "%",
+            doingTaskPercent: 0 + "%",
+            doneTaskPercent: 0 + "%",
+        };
 
         this.props.todoList.forEach((todo) => {
+            if (todo.status === "todo" || todo.status === "doing" || todo.status === "done") {
+                totalTaskNum += 1
+            }
             if (todo.status === "doing") {
                 doingTaskNum += 1;
             } else if(todo.status === "done") {
@@ -90,12 +96,15 @@ export class TaskListPage extends React.Component {
                 todoTaskNum += 1;
             }
         });
-
-        return {
-            todoTaskPercent: Math.floor((todoTaskNum / totalTaskNum) * 100) + "%",
-            doingTaskPercent: Math.floor((doingTaskNum / totalTaskNum) * 100) + "%",
-            doneTaskPercent: Math.floor((doneTaskNum / totalTaskNum) * 100) + "%"
-        };
+        if (totalTaskNum === 0) {
+            return initialProgress;
+        } else {
+            return {
+                todoTaskPercent: Math.round((todoTaskNum / totalTaskNum) * 100) + "%",
+                doingTaskPercent: Math.round((doingTaskNum / totalTaskNum) * 100) + "%",
+                doneTaskPercent: Math.round((doneTaskNum / totalTaskNum) * 100) + "%"
+            };
+        }
     }
 
     openEditWindow(event) {
@@ -123,6 +132,11 @@ export class TaskListPage extends React.Component {
         }
     }
 
+    deleteTask() {
+        this.props.actions.deleteTask(this.editedTaskId);
+        this.closeEditWindow();
+    }
+
     //-----------------------------------------
 
     render() {
@@ -144,7 +158,7 @@ export class TaskListPage extends React.Component {
                             <ToDoList
                                 id="todoList"
                                 todos={this.props.todoList}
-                                taskDoingHandler={(event) => this.updateTodoStatus(event, "doing")}
+                                startBtnHandler={this.moveToTimerPage}
                                 taskDoneHandler={(event) => this.updateTodoStatus(event, "done")}
                                 handleEditClick={(event) => this.openEditWindow(event)}/> :
                             this.state.filter === "doingList" ?
@@ -161,6 +175,7 @@ export class TaskListPage extends React.Component {
                                     handleEditClick={(event) => this.openEditWindow(event)}/>
                     }
                     {this.state.toEdit ? <EditTaskWindow
+                        deleteTask={this.deleteTask}
                         closeWindow={this.closeEditWindow}
                         taskEditSaveBtn={this.saveEditedTask}/> : null}
 
@@ -174,6 +189,10 @@ TaskListPage.propTypes = {
     todoList: PropTypes.array,
     actions: PropTypes.object.isRequired
 };
+
+TaskListPage.contextTypes = {
+    router: PropTypes.object
+}
 
 function mapStateToProps(state) {
     return {
