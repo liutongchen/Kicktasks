@@ -64,55 +64,8 @@ export function moveTab(tabId) {
 
     nextTabSiblings.forEach(sibling => {
         sibling.classList.remove("active");
-    })
-
-    nextTab.classList.add("active") 
-}
-    /*
-    //create an input node if "other" is chosen
-    if (document.getElementById(parentNodeId).children.length === 1) {
-        let event = new Event("change");
-        document.getElementById(parentNodeId).dispatchEvent(event);
-        updateOptions(parentNodeId);
-    }
-}
-
-
-
-function updateOptions(parentNodeId) {
-    const parentDiv = document.getElementById(parentNodeId);
-    if (!parentDiv.value || parentDiv.value === "") {
-        let other = prompt("Please add a new task: ");
-        if (!other) {return false;}
-        const node = document.createElement("option");
-        const text = document.createTextNode(other);
-        node.appendChild(text);
-        parentDiv.insertBefore(node, parentDiv.firstChild);
-        return other;
-    }
-}
-
-/*
-export function objectsAreSame(x, y, propertyNameList) {
-    let objectsAreSame = true;
-    for (let property in propertyNameList) {
-        if (x[property] !== y[property]) {
-            return objectsAreSame = false;
-        }
-    }
-    return objectsAreSame;
-}
-
-
-function componentWillReceiveProps(nextProps) {
-    const currentToDoList = this.state.todoList;
-    nextProps.todoList.forEach((currentVal, index) => {
-        if (currentToDoList.length < nextProps.todoList.length ||
-            !objectsAreSame(currentVal, currentToDoList[index], ["doing", "done"])) {
-            this.setState({
-                todoList: nextProps.todoList
-            });
-        }
     });
+
+    nextTab.classList.add("active");
 }
-    */
+ 

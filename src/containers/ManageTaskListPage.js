@@ -79,6 +79,8 @@ export class TaskListPage extends React.Component {
         let doingTaskNum = 0;
         let doneTaskNum = 0;
         let todoTaskNum = 0;
+        let doingTaskPercentNum;
+        let doneTaskPercentNum;
         let initialProgress = {
             todoTaskPercent: 0 + "%",
             doingTaskPercent: 0 + "%",
@@ -87,7 +89,7 @@ export class TaskListPage extends React.Component {
 
         this.props.todoList.forEach((todo) => {
             if (todo.status === "todo" || todo.status === "doing" || todo.status === "done") {
-                totalTaskNum += 1
+                totalTaskNum += 1;
             }
             if (todo.status === "doing") {
                 doingTaskNum += 1;
@@ -100,10 +102,12 @@ export class TaskListPage extends React.Component {
         if (totalTaskNum === 0) {
             return initialProgress;
         } else {
+            doingTaskPercentNum = Math.round((doingTaskNum / totalTaskNum) * 100);
+            doneTaskPercentNum = Math.round((doneTaskNum / totalTaskNum) * 100);
             return {
-                todoTaskPercent: Math.round((todoTaskNum / totalTaskNum) * 100) + "%",
-                doingTaskPercent: Math.round((doingTaskNum / totalTaskNum) * 100) + "%",
-                doneTaskPercent: Math.round((doneTaskNum / totalTaskNum) * 100) + "%"
+                todoTaskPercent: (100 - doingTaskPercentNum - doneTaskPercentNum) + "%",
+                doingTaskPercent: doingTaskPercentNum + "%",
+                doneTaskPercent: doneTaskPercentNum + "%"
             };
         }
     }
@@ -193,7 +197,7 @@ TaskListPage.propTypes = {
 
 TaskListPage.contextTypes = {
     router: PropTypes.object
-}
+};
 
 function mapStateToProps(state) {
     return {

@@ -40,5 +40,5 @@ export const deleteTask = (todoId) => {
     return {
         type: types.DELETE_TASK,
         todoId
-    }
-}
+    };
+};

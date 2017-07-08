@@ -56,7 +56,6 @@ export default function taskReducer(state=initialState.todoList, action) {
         }
 
         case types.DELETE_TASK: {
-            debugger;
             action.todoId = parseInt(action.todoId);
             const after = state.slice(action.todoId + 1);
             const before = state.slice(0, action.todoId);

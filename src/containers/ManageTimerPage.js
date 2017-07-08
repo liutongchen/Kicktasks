@@ -67,6 +67,8 @@ export class ManageTimerPage extends React.Component {
             //if newly added, update the status and duration in componentDidReceiveProps
             let newlyAddedVal = prompt("Please enter the task you just did: ");
             if (newlyAddedVal) {this.props.actions.addTodo(newlyAddedVal);}
+            this.closePopUp();
+            return;
         } else {
             //if already exist, directly update the status and duration
             this.props.todoList.forEach(todo => {
@@ -79,15 +81,13 @@ export class ManageTimerPage extends React.Component {
             this.props.actions.updateTodoStatus(todoId, status);
             this.startTimer("breakDurationInp", "break");
         }
-
         this.closePopUp();
     }
     
     startTimer(timerId, action) {
-        debugger;
         if (this.state.isRunning === true) { return ;}
             const timerDurationInp = document.getElementById(timerId);
-            let timerDuration = timerDurationInp.value === "" ? timerDurationInp.getAttribute("placeholder") : workDurationInp.value;
+            let timerDuration = timerDurationInp.value === "" ? timerDurationInp.getAttribute("placeholder") : timerDurationInp.value;
             let timerDurationInSec = (+timerDuration) * 60;
 
         if (!isTimerValid(timerDurationInSec)) { toastr.error("Please check your input!"); return; }
@@ -101,7 +101,8 @@ export class ManageTimerPage extends React.Component {
                     this.setState({
                         isRunning: false,
                         timer: getInitialTimer()
-                    })
+                    });
+                    this.redirect();
                 }
              } else {
                 let min = Math.floor(timerDurationInSec / 60);

@@ -30,11 +30,11 @@ const HomePage = ({launchAppHandler}) =>  {
             </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
-    )
+    );
 };
 
 HomePage.propTypes = {
     launchAppHandler: PropTypes.func.isRequired
-}
+};
 
 export default HomePage;

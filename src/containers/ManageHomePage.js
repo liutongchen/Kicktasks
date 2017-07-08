@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import HomePage from '../components/Home/HomePage';
 import {moveTab} from '../constants/helperFunctions';
 
@@ -10,20 +10,20 @@ class ManageHomePage extends React.Component {
     }
 
     launchApp() {
-        moveTab("taskTab")
+        moveTab("taskTab");
         this.context.router.push("/task");
     }
     
     render() {
         return (
             <HomePage launchAppHandler={this.launchApp}/>
-        )
+        );
     }
 }
 
 ManageHomePage.contextTypes = {
     router: PropTypes.object
-}
+};
 
-export default ManageHomePage
+export default ManageHomePage;
 
