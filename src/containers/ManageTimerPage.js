@@ -21,7 +21,7 @@ export class ManageTimerPage extends React.Component {
             isRunning: false,
             isTimerComplete: false
         };
-        this.startWorkTimer = this.startWorkTimer.bind(this);
+        this.startTimer = this.startTimer.bind(this);
         this.stopWorkTimer = this.stopWorkTimer.bind(this);
         this.endTimer = this.endTimer.bind(this);
         this.closePopUp = this.closePopUp.bind(this);
@@ -35,7 +35,7 @@ export class ManageTimerPage extends React.Component {
         if (this.props.todoList.length < nextProps.todoList.length) {
             nextProps.actions.updateTodoStatus(nextProps.todoList.length-1, "doing"); //assume the newly added task is the last one in todolist
             nextProps.actions.updateTodoDuration(nextProps.todoList.length-1, this.currentDurationInMin + "min");
-            this.redirect();
+            this.startTimer("breakDurationInp", "break");
         }
     }
     //-------helper functions------------
@@ -77,26 +77,35 @@ export class ManageTimerPage extends React.Component {
             });
             this.props.actions.updateTodoDuration(todoId, duration);
             this.props.actions.updateTodoStatus(todoId, status);
-            this.redirect();
+            this.startTimer("breakDurationInp", "break");
         }
 
-        $("#taskInpModal").modal("hide");
+        this.closePopUp();
     }
-
-    startWorkTimer() {
+    
+    startTimer(timerId, action) {
+        debugger;
         if (this.state.isRunning === true) { return ;}
-        const workDurationInp = document.getElementById("workDurationInp");
-        let workDuration = workDurationInp.value === "" ? workDurationInp.getAttribute("placeholder") : workDurationInp.value;
-        let workDurationInSec = (+workDuration) * 60;
+            const timerDurationInp = document.getElementById(timerId);
+            let timerDuration = timerDurationInp.value === "" ? timerDurationInp.getAttribute("placeholder") : workDurationInp.value;
+            let timerDurationInSec = (+timerDuration) * 60;
 
-        if (!isTimerValid(workDurationInSec)) { toastr.error("Please check your input!"); return; }
+        if (!isTimerValid(timerDurationInSec)) { toastr.error("Please check your input!"); return; }
         this.countdown = setInterval(() => {
-            if (workDurationInSec === 0) {
-                this.endTimer();
-                this.currentDurationInMin = workDuration;
-            } else {
-                let min = Math.floor(workDurationInSec / 60);
-                let sec = workDurationInSec % 60;
+            if (timerDurationInSec === 0) {
+                if (action === "work") {
+                    this.endTimer();
+                    this.currentDurationInMin = timerDuration;
+                } else if (action === "break") {
+                    clearInterval(this.countdown);
+                    this.setState({
+                        isRunning: false,
+                        timer: getInitialTimer()
+                    })
+                }
+             } else {
+                let min = Math.floor(timerDurationInSec / 60);
+                let sec = timerDurationInSec % 60;
 
                 min = min < 10 ? "0" + min : min;
                 sec = sec < 10 ? "0" + sec : sec;
@@ -106,10 +115,9 @@ export class ManageTimerPage extends React.Component {
                     isRunning: true
                 });
 
-                workDurationInSec -= 1;
+                timerDurationInSec -= 1;
             }
         }, 1);
-
     }
 
     stopWorkTimer() {
@@ -128,7 +136,7 @@ export class ManageTimerPage extends React.Component {
     render() {
         return (
             <div>
-                <TimerPage timer={this.state.timer} startWorkTimer={this.startWorkTimer} stopWorkTimer={this.stopWorkTimer}/>
+                <TimerPage timer={this.state.timer} startWorkTimer={() => this.startTimer("workDurationInp", "work")} stopWorkTimer={this.stopWorkTimer}/>
                 {this.state.isTimerComplete ?
                     <RecordTaskPopUp
                         todoList={this.props.todoList}
