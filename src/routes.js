@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/App';
-import HomePage from './components/Home/HomePage';
-import TaskListPage from './containers/TaskListPage'; //eslint-disable-line import/no-named-as-default
+import HomePage from './containers/ManageHomePage';
+import TaskListPage from './containers/ManageTaskListPage'; //eslint-disable-line import/no-named-as-default
 import TimerPage from './containers/ManageTimerPage'; //eslint-disable-line import/no-named-as-default
 
 export default (

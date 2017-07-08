@@ -1,38 +1,40 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import { Carousel, Button } from 'react-bootstrap';
 
-class HomePage extends React.Component {
-    componentDidMount() {
-        $('.carousel').carousel("cycle");
-    }
-    render() {
-        return(
-            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                <ol className="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div className="carousel-inner" role="listbox">
-                    <div className="carousel-item active">
-                        <img className="d-block img-fluid" src="../" alt="First slide" />
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-block img-fluid" src="..." alt="Second slide"/>
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-block img-fluid" src="..." alt="Third slide"/>
-                    </div>
-                </div>
-                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"/>
-                    <span className="sr-only">Previous</span>
-                </a>
-                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"/>
-                    <span className="sr-only">Next</span>
-                </a>
-            </div>
-        )}
+const HomePage = ({launchAppHandler}) =>  {
+    return(
+        <Carousel interval={1000}>
+            <Carousel.Item>
+            <img style={{minHeight: "655px"}} alt="productivity" className="homeImg" src="https://lh3.google.com/u/0/d/0B30SIT1ukJtaVjJoS0hEemVtcXc=w2560-h1318-iv1"/>
+            <Carousel.Caption>
+                <Button bsStyle="info" bsSize="large" onClick={launchAppHandler}>Launch App</Button>
+                <h3>Todo + Doing + Done</h3>
+                <p>A to-do list of multiple status to promote your work efficiency</p>
+            </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+            <img alt="productivity" style={{minHeight: "655px"}} className="homeImg" src="https://lh3.google.com/u/0/d/0B30SIT1ukJtaUnhSLVdSN3k1TEE=w2560-h1318-iv1"/>
+            <Carousel.Caption>
+                <Button bsStyle="info" bsSize="large" onClick={launchAppHandler}>Launch App</Button>
+                <h3>Pomodoro</h3>
+                <p>A flexible timer to manage your time scientifically</p>
+            </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+            <img alt="productivity" className="homeImg" src="https://lh3.google.com/u/0/d/0B30SIT1ukJtaU2lWd2VQekhESVE=w2560-h1318-iv1      "/>
+            <Carousel.Caption>
+                <Button bsStyle="info" bsSize="large" onClick={launchAppHandler}>Launch App</Button>
+                <h3>Time Recorder</h3>
+                <p>A visible timer recorder to track your work timer easily</p>
+            </Carousel.Caption>
+            </Carousel.Item>
+        </Carousel>
+    )
+};
+
+HomePage.propTypes = {
+    launchAppHandler: PropTypes.func.isRequired
 }
 
 export default HomePage;

@@ -19,9 +19,9 @@ class App extends React.Component {
 
                         <div className="navbar-collapse collapse" id="navbarNavDropdown">
                             <ul className="nav navbar-nav navbar-right" >
-                                <li className="nav"><IndexLink to="/" onClick={(e) => toggleActiveClass(e)}>Home</IndexLink></li>
-                                <li className="nav"><Link to="/task" onClick={(e) => toggleActiveClass(e)}>Task</Link></li>
-                                <li className="nav"><Link to="/timer" onClick={(e) => toggleActiveClass(e)}>Timer</Link></li>
+                                <li className="nav active" id="homeTab"><IndexLink to="/" onClick={(e) => toggleActiveClass(e)}>Home</IndexLink></li>
+                                <li className="nav" id="taskTab"><Link to="/task" onClick={(e) => toggleActiveClass(e)}>Task</Link></li>
+                                <li className="nav" id="timerTab"><Link to="/timer" onClick={(e) => toggleActiveClass(e)}>Timer</Link></li>
                             </ul>
                         </div>
 

@@ -10,7 +10,7 @@ import EditTaskWindow from '../components/TaskList/EditTaskWindow';
 import {connect} from 'react-redux';
 import * as taskActions from '../actions/taskListActions';
 import {bindActionCreators} from 'redux';
-import {findClickedTodo, isTimerValid, isTitleValid} from '../constants/helperFunctions';
+import {findClickedTodo, isTimerValid, isTitleValid, moveTab} from '../constants/helperFunctions';
 import toastr from 'toastr';
 
 export class TaskListPage extends React.Component {
@@ -51,6 +51,7 @@ export class TaskListPage extends React.Component {
     }
 
     moveToTimerPage() {
+        moveTab("timerTab");
         this.context.router.push("/timer");
     }
 

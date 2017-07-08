@@ -57,6 +57,17 @@ export function toggleActiveClass(event) {
         });
         clickedTabParent.className += " active";
 }
+
+export function moveTab(tabId) {
+    const nextTab = document.getElementById(tabId);
+    const nextTabSiblings = nextTab.parentNode.childNodes;
+
+    nextTabSiblings.forEach(sibling => {
+        sibling.classList.remove("active");
+    })
+
+    nextTab.classList.add("active") 
+}
     /*
     //create an input node if "other" is chosen
     if (document.getElementById(parentNodeId).children.length === 1) {
